@@ -10,7 +10,8 @@ class Course(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
     teacher_id: Mapped[int] = mapped_column(ForeignKey("teachers.id"))
-    teacher: Mapped["Teacher"] = relationship(back_populates="groups")
+    teacher: Mapped["Teacher"] = relationship(back_populates="courses")
+    grades: Mapped[list["Grade"]] = relationship(back_populates="course")
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )

@@ -11,9 +11,9 @@ class Grade(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     value: Mapped[int] = mapped_column(Integer)
     course_id: Mapped[int] = mapped_column(ForeignKey("courses.id"))
-    course: Mapped["Course"] = relationship(back_populates="courses")
+    course: Mapped["Course"] = relationship(back_populates="grades")
     student_id: Mapped[int] = mapped_column(ForeignKey("students.id"))
-    student: Mapped["Student"] = relationship(back_populates="students")
+    student: Mapped["Student"] = relationship(back_populates="grades")
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
@@ -26,9 +26,9 @@ class Grade(Base):
 
     @orm.validates("value")
     def validate_grade(self, key, value):
-        if not 0 < value < 100:
+        if not 0 < value <= 100:
             raise ValueError(f"Invalid grade {value}")
         return value
 
     def __repr__(self) -> str:
-        return f"<Grade(id={self.id}, name='{self.name}')>"
+        return f"<Grade(id={self.id}, value='{self.value}')>"
