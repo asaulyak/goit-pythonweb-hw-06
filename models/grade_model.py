@@ -3,8 +3,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.util.preloaded import orm
 
 from db import Base
-from models.course_model import Course
-from models.student_model import Student
 
 
 class Grade(Base):
